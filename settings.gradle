@@ -1,0 +1,3 @@
+rootProject.name = "Oneclick Utils Library"
+include ':app'
+include ':libutils'

@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="text_date_format">%1$s%2$s %3$s</string>
+
+    <string name="text_empty_email">Please enter email address.</string>
+    <string name="text_invalid_email">Please enter valid email address.</string>
+    <string name="text_empty_password">Please enter your password.</string>
+
+    <string name="text_empty_fname">Please enter your first name.</string>
+    <string name="text_empty_lname">Please enter your last name.</string>
+    <string name="text_empty_username">Please enter your user name.</string>
+    <string name="text_empty_mobile">Please enter your mobile number.</string>
+    <string name="text_empty_confirm_pass">Please enter your confirm password.</string>
+
+</resources>
