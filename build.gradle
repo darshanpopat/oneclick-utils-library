@@ -18,7 +18,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url 'https://www.jitpack.io' }
     }
 }
 
@@ -33,8 +33,8 @@ ext {
     compileSdkVersion = targetSdkVersion
 
     // ValidateTor Library Info
-    libVersionCode = 2
-    libVersionName = '1.0.1'
+    libVersionCode = 5
+    libVersionName = '1.0.5'
     libModuleName = 'utils-library'
     libModuleDesc = 'Android library for all Util classes.'
     archivesBaseName = 'utils-library'
