@@ -1,21 +1,24 @@
 package com.oneclick.sample.library
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.oneclick.utils.library.AppDateFormatUtils
-import com.oneclick.utils.library.AppUtils
 import com.oneclick.utils.library.logA
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
-    val appUtils = AppUtils(application)
-    val appDateFormatUtils = AppDateFormatUtils(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        logA()
+        val calendar = Calendar.getInstance()
+        logA(
+            MyApplication.appDateFormatUtils.formatDate(
+                calendar.time,
+                AppDateFormatUtils.DATE_FORMAT_DATE
+            )
+        )
 
     }
 

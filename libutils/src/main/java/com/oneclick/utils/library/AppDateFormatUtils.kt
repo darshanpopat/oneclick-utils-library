@@ -48,6 +48,16 @@ open class AppDateFormatUtils(private var application: Application) {
     /**
      * Author : Darshan Popat
      * Date : 09 December 2020
+     * Description : Following function will take date in string format, and convert it to hh:mm a (01:00 PM) format.
+     */
+    fun formatDate(date: Date, conversationFormat: String): String {
+        val myFormat = SimpleDateFormat(conversationFormat, Locale.getDefault())
+        return myFormat.format(date)
+    }
+
+    /**
+     * Author : Darshan Popat
+     * Date : 09 December 2020
      * Description : Following function will take date in string format, and convert it to dd MMM yyyy with suffix (10th May 2020) format.
      */
     fun formatDateWithSuffix(date: String, isTimeInUTC: Boolean): String {
