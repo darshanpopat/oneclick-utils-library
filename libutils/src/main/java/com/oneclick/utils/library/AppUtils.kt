@@ -2,15 +2,22 @@ package com.oneclick.utils.library
 
 import android.app.Application
 import android.content.Context
+import android.content.IntentSender
 import android.location.LocationManager
 import android.util.Patterns
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.location.LocationManagerCompat
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 import java.util.regex.Pattern
 
 class AppUtils(var application: Application) {
 
     companion object {
+        const val requestCheckSettings = 111
+
         fun newInstance(application: Application): AppUtils {
             return AppUtils(application)
         }
@@ -20,6 +27,51 @@ class AppUtils(var application: Application) {
          */
         fun isEmailValid(email: String): Boolean {
             return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
+
+        /**
+         * Author : Darshan Popat
+         * Date : 19 April 2021
+         * Description : Click listener of resend code text to call API to Re-send the OTP email.
+         */
+        fun isLocationEnabled(context: Context): Boolean {
+            val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            return LocationManagerCompat.isLocationEnabled(locationManager)
+        }
+
+        /**
+         * Author : Darshan Popat
+         * Date : 19 April 2021
+         * Description : Click listener of resend code text to call API to Re-send the OTP email.
+         */
+        fun createLocationRequest(activity: AppCompatActivity) {
+            val locationRequest = LocationRequest.create().apply {
+                interval = 10000
+                fastestInterval = 5000
+                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            }
+
+            val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+
+            val client: SettingsClient = LocationServices.getSettingsClient(activity)
+            val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
+
+            task.addOnFailureListener { exception ->
+                if (exception is ResolvableApiException) {
+                    // Location settings are not satisfied, but this can be fixed
+                    // by showing the user a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        exception.startResolutionForResult(
+                            activity,
+                            requestCheckSettings
+                        )
+                    } catch (sendEx: IntentSender.SendIntentException) {
+                        // Ignore the error.
+                    }
+                }
+            }
         }
 
     }
@@ -32,18 +84,6 @@ class AppUtils(var application: Application) {
             InputMethodManager.SHOW_FORCED
         )
     }
-
-    /**
-     * Return the availability of GooglePlayServices
-     */
-//    fun isGooglePlayServicesAvailable(): Boolean {
-//        val googleApiAvailability = GoogleApiAvailability.getInstance()
-//        val status = googleApiAvailability.isGooglePlayServicesAvailable(application.baseContext)
-//        if (status != ConnectionResult.SUCCESS) {
-//            return false
-//        }
-//        return true
-//    }
 
     val PASSWORD = Pattern.compile(
         "^" + "(?=.*[0-9])" +  //at least 1 digit
@@ -58,25 +98,6 @@ class AppUtils(var application: Application) {
 
     fun isPasswordValid(password: String): Boolean {
         return PASSWORD.matcher(password).matches()
-    }
-
-    fun checkLocationStatus(): Boolean {
-        val locationManager =
-            application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var isGpsEnabled = false
-        var isNetworkEnabled = false
-
-        try {
-            isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        } catch (e: Exception) {
-        }
-
-        try {
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        } catch (e: Exception) {
-        }
-
-        return isGpsEnabled || isNetworkEnabled
     }
 
 }
