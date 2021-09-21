@@ -20,7 +20,7 @@ import com.oneclick.utils.library.AppUtils
 class CustomEditTextView(context: Context, attrs: AttributeSet?) :
     TextInputEditText(context, attrs) {
     private var typefaceType = 0
-    private var typeEditText = -1
+    private var typeEditText = 0
     private var mTypeFactory: TypeFactory? = null
 
     init {
@@ -46,11 +46,6 @@ class CustomEditTextView(context: Context, attrs: AttributeSet?) :
         onFocusChangeListener = OnFocusChangeListener { _, b ->
             if (!hasFocus()) {
                 when (typeEditText) {
-                    0 -> {//normal validation
-                        if (text!!.trim().toString().isEmpty()) {
-                            showToast(this, resources.getString(R.string.text_empty_email))
-                        }
-                    }
                     1 -> {//email validation
                         if (text!!.trim().toString().isEmpty()) {
                             showToast(this, resources.getString(R.string.text_empty_email))

@@ -17,6 +17,7 @@
             <enum name="username" value="5" />
             <enum name="confirmPassword" value="6" />
             <enum name="mobileNo" value="7" />
+            <enum name="other" value="8" />
         </attr>
     </declare-styleable>
 </resources>
