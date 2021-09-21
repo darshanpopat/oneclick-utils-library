@@ -20,7 +20,7 @@ import com.oneclick.utils.library.AppUtils
 class CustomEditTextView(context: Context, attrs: AttributeSet?) :
     TextInputEditText(context, attrs) {
     private var typefaceType = 0
-    private var typeEditText = 0
+    private var typeEditText = -1
     private var mTypeFactory: TypeFactory? = null
 
     init {
